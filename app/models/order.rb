@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   has_many :items, as: :sellable
   has_many :products, through: :items
 
-  enum status: {open: 0, awaiting_payment: 1, paid: 2, preparing_shipment: 3, shipped: 4, arrived: 5, done: 6}
+  enum status: {open: 0, awaiting_payment: 1, paid: 2, preparing_shipment: 3, shipped: 4, arrived: 5, done: 6, cancelled: 7, returned: 8}
 
   def change_status(next_status)
     start_order_calculations()
@@ -65,4 +65,12 @@ class Order < ApplicationRecord
     return x
   end
 
+  def cancel_order
+    if self.status == ("open" or "awainting_payment")
+      self.items.each do |return_to_stock|
+        Product.find_by(id: return_to_stock.product_id).stock.add_batch(return_to_stock.amount)
+      end
+      self.change_status("cancelled")
+    end
+  end
 end
