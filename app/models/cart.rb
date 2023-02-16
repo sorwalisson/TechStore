@@ -35,7 +35,7 @@ class Cart < ApplicationRecord
       @order = Order.create(user_id: self.user_id, finance_id: @finance.id)
       self.items.each do |changer|
         changer.update(sellable_type: "Order", sellable_id: @order.id)
-        Stock.find_by(product_id: changer.product_id).subtract_item(changer.amount)
+        Stock.find_by(product_id: changer.product_id).subtract_item(changer.amount) #subtract item from stock
       end
     end
   end
