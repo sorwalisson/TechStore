@@ -73,8 +73,14 @@ class User < ApplicationRecord
     self.personal_information = JSON.generate(user_personal_information)
     self.save
   end
+# End of adding address 
   
-  # End of adding address 
+  def add_item_to_cart(selected_item)
+    if Item.create(product_id: selected_item, amount: 1, sellable_type: "Cart", sellable_id: self.cart.id) then return true end
+  end
+
+  
+  
 
 
     

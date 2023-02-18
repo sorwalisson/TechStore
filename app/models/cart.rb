@@ -40,4 +40,11 @@ class Cart < ApplicationRecord
     end
   end
 
+  def clean_cart
+    self.items.each do |item|
+      item.destroy
+    end
+    calculate_total()
+  end
+
 end

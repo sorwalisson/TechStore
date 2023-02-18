@@ -6,4 +6,7 @@ class ApplicationController < ActionController::Base
   def check_admin
     return msg_not_admin() unless current_user.admin?
   end
+
+
+
 end
