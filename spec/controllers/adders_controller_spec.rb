@@ -9,6 +9,7 @@ RSpec.describe Api::V1::AddersController, type: :controller do
         user_tester = create(:user)
         sign_in user_tester
         post("create", params: {product_id: buying_product.id})
+        user_tester.cart.reload
         json = JSON.parse(response.body)
         expect(json["sucess"]).to eql("The item was added to your cart sucessfully")
         expect(user_tester.cart.items.count).to eql(1)

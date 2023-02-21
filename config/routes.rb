@@ -11,16 +11,21 @@ Rails.application.routes.draw do
         end
 
         resources :reviews, only: [:create, :destroy]
-        resource :adder, only: :create
+        resource :adder, only: :create do
+          collection do
+            post "/(:amount)", action: :create
+          end
+        end
       end
-      resources :users, only: :index do
-        resource :carts, only: [:index, :destroy] do
+      resources :users, only: :show do
+        resource :carts, only: [:show, :destroy] do
           concerns :sellable
         end
         resources :orders, only: [:index, :show] do
           concerns :sellable
         end
       end
+      resource :finance, only: :index
     end
   end
 end

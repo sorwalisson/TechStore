@@ -4,7 +4,9 @@ module Api
       before_action :authenticate_user!
       def create
         selected_item = params[:product_id]
-        if current_user.add_item_to_cart(selected_item)
+        selected_amount = params[:amount]
+        if selected_amount == nil then selected_amount = 1 end
+        if current_user.add_item_to_cart(selected_item, selected_amount)
           render json: {sucess: "The item was added to your cart sucessfully"}
         else
           render json: {error: "Unknown Error"}

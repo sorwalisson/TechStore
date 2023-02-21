@@ -75,8 +75,8 @@ class User < ApplicationRecord
   end
 # End of adding address 
   
-  def add_item_to_cart(selected_item)
-    if Item.create(product_id: selected_item, amount: 1, sellable_type: "Cart", sellable_id: self.cart.id) then return true end
+  def add_item_to_cart(selected_item, selected_amount)
+    self.cart.add_item(selected_item, selected_amount)
   end
 
   
