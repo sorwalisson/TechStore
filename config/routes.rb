@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   namespace :api do
     namespace :v1 do
+      resource :finances, only: :show
       concern :sellable do
         resources :items, only: [:show, :destroy]
       end
@@ -25,7 +26,6 @@ Rails.application.routes.draw do
           concerns :sellable
         end
       end
-      resource :finance, only: :index
     end
   end
 end

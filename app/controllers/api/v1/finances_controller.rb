@@ -4,9 +4,10 @@ module Api
       before_action :authenticate_user!
       before_action :check_admin
 
-      def index
+      def show
         finance = Finance.first
-        render json: FinanceSerializer.new(finance, {include: :orders.where(status: "done")}).serializable_hash
+        finance.start_calculations
+        render json: FinanceSerializer.new(finance, {include: :orders}).serializable_hash
       end
     end
   end

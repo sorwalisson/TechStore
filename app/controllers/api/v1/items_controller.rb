@@ -2,7 +2,6 @@ module Api
   module V1
     class ItemsController < ApplicationController
       before_action :authenticate_user!
-      before_action :cart_item_checker(params[:id])
       def show
         item = Item.find_by(id: params[:id])
         render :json => item, each_serializer: ItemSerializer
@@ -10,7 +9,7 @@ module Api
 
       def destroy
         item = Item.find_by(id: params[:id])
-        if cart_item_checker(item.id) == true
+        if item.cart_item_checker == true
           item.destroy
           render json: {sucess: "The item was destroyed sucessfully"}
         else
