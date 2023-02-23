@@ -11,7 +11,7 @@ Rails.application.routes.draw do
           get "/filter/(:query)", action: :index
         end
 
-        resources :reviews, only: [:create, :destroy]
+        resources :reviews, only: [:create, :destroy, :update]
         resource :adder, only: :create do
           collection do
             post "/(:amount)", action: :create

@@ -7,13 +7,6 @@ class Product < ApplicationRecord
   after_create :create_stock
   
   #Scopes
-
-  scope :sector_hardware, -> {where(section: "hardware")}
-  scope :sector_peripherals, -> {where(section: "peripherals")}
-  scope :sector_consoles, -> {where(section: "consoles")}
-  scope :sector_furniture, -> {where(section: "furniture")}
-  scope :sector_computers, -> {where(section: "computers")}
-  scope :sector_accessories, -> {where(section: "accessories")}
   
   #Methods
   

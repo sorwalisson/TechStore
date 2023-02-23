@@ -16,10 +16,10 @@ class Cart < ApplicationRecord
 
   def add_item(id_product, add_amount)
     if self.items.find_by(product_id: id_product).nil?
-      Item.create(product_id: id_product, amount: add_amount, sellable_type: "Cart", sellable_id: self.id)
+      Item.create(product_id: id_product, amount: add_amount, sellable_type: "Cart", sellable_id: self.id) #this part if the user doesnt have the item in the cart
     else
       new_amount = self.items.find_by(product_id: id_product).amount + add_amount
-      self.items.find_by(product_id: id_product).update(amount: new_amount)
+      self.items.find_by(product_id: id_product).update(amount: new_amount) #this one if he has.
     end
     calculate_total()
   end
@@ -36,6 +36,7 @@ class Cart < ApplicationRecord
       self.items.each do |changer|
         changer.update(sellable_type: "Order", sellable_id: @order.id)
         Stock.find_by(product_id: changer.product_id).subtract_item(changer.amount) #subtract item from stock
+        Product.find_by(id: changer.product_id).check_availability #update if the items is still available for sale
       end
     end
   end

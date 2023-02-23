@@ -3,7 +3,7 @@ module Api
     class UsersController < ApplicationController
       before_action :authenticate_user!
 
-      def index
+      def show
         user = User.find_by(id: current_user.id)
         render :json => user, each_serializer: UserSerializer
       end
